@@ -39,8 +39,22 @@ df.head() #confirm loaded dataframe by checking first few rows
 df.shape
 df.info()
 ```
-At first glance, there were no null values, but I proceeded to further check using;
+Some columns had the wrong datatype, so i had to fix:
 ```
+# change seniorcitizen to obj, total charges to float
+df["SeniorCitizen"] = df["SeniorCitizen"].astype(object)
+df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors= "coerce")
+df.dtypes #confirm type change
+```
+At first glance, there were no null values, but I proceeded to further check using since *TotalCharges* is now a float;
+```
+df.isnull().sum()
+```
+
+
+
+
+
 
 
 
