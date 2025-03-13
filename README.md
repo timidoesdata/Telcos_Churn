@@ -34,22 +34,36 @@ df.head() #confirm loaded dataframe by checking first few rows
 ```
 ![image](https://github.com/user-attachments/assets/87c9ef83-9dee-46b4-8b02-13bf91f5b6fd)
 
+
 - I wanted to understand the dataset structure before getting into the cleaning using;
 ```
 df.shape
 df.info()
 ```
-Some columns had the wrong datatype, so i had to fix:
+
+- Some columns had the wrong datatype, so i had to fix:
 ```
 # change seniorcitizen to obj, total charges to float
 df["SeniorCitizen"] = df["SeniorCitizen"].astype(object)
 df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors= "coerce")
 df.dtypes #confirm type change
 ```
-At first glance, there were no null values, but I proceeded to further check using since *TotalCharges* is now a float;
+
+- At first glance, there were no null values, but I proceeded to further check using since *TotalCharges* is now a float. There are 11 missing values in the *TotalCharges* column, but these can be determined using the formular *MonthlyCharges* * *tenure*. 
+
+- Some variables with yes/no values can be changed to binary format for easier process later on 
 ```
-df.isnull().sum()
+# highlight the columns with yes/no values
+yesno_cols = ["Partner", "Dependents", "PhoneService", "PaperlessBilling", "Churn"]
+df[yesno_cols] = df[yesno_cols].apply(lambda x: x.map({"Yes": 1, "No": 0}))
+df[yesno_cols].head()
 ```
+
+- Saved the now clean dataset
+```
+df.to_csv("cleaned_Telcos_Churn.csv", index= False)
+```
+
 
 
 
