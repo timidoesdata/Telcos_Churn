@@ -5,7 +5,7 @@
 Customer retention is a key metric for any subscription-based business, and understanding why customers leave is crucial to long-term profitability. 
 In this project, I analyzed customer churn in the telecom industry using [data from Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn).
 
-The objective is to **identify key factors influencing churn, extract actionable insights,** and **build a predictive model** to help businesses reduce customer attrition. The analysis follows a structured approach using **Python for data preprocessing,** **SQL for querying,** and **Power BI for visualization.**
+The objective is to **identify key factors influencing churn, and extract actionable insights** to help this business reduce customer attrition. The analysis follows a structured approach using **Python for data preprocessing** & **EDA** **SQL for querying,** and **Power BI for visualization.**
 
 ## Dataset Used: 
 
@@ -21,7 +21,6 @@ The [Telco Customer Churn dataset](https://www.kaggle.com/datasets/blastchar/tel
 - Python
 - Microsoft SQL
 - Microsoft Power BI
-- Scikit Learn
 
 ## Data Cleaning & Prep
 
@@ -63,6 +62,8 @@ df[yesno_cols].head()
 ```
 df.to_csv("cleaned_Telcos_Churn.csv", index= False)
 ```
+
+## Exploratory Data Analysis 
 
 
 
