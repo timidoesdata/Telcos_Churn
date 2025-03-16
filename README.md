@@ -65,9 +65,32 @@ df.to_csv("cleaned_Telcos_Churn.csv", index= False)
 
 ## Exploratory Data Analysis 
 
+I explored the clean data to understand customer behaviour, identify trends and patterns. 
 
+- First, I loaded my *cleaned_Telcos_Churn.csv* into Microsoft SQL, under my *TELCOS* database. Ensured the data loaded correctly by returning all the columns using the query below;
+```
+SELECT * FROM cleaned_Telcos_Churn
+```
 
+- How many customers stayed / churned?
+```
+SELECT Churn, COUNT(*) AS churn_count
+FROM cleaned_Telcos_Churn
+WHERE Churn = 1 OR Churn = 0
+GROUP BY Churn
+```
 
+![image](https://github.com/user-attachments/assets/42233e4c-8ff8-4db7-b04f-fa84fc3f25fc)
+
+From the results of the above, **5,174** customers were retained, while the remaining **1,869** churned/left. Let us find the percentage churn, which we can do by either calculating *(number of churned customers / total number of customers) * 100* or simply writing the query below:
+```
+SELECT COUNT(CASE WHEN Churn = 1
+	THEN 1 END) * 100 / COUNT(*) AS churn_rate 
+FROM cleaned_Telcos_Churn
+```
+![image](https://github.com/user-attachments/assets/1607c1fe-4871-4f64-bce8-c6a2bffb0655)
+
+- 
 
 
 
