@@ -90,9 +90,16 @@ FROM cleaned_Telcos_Churn
 ```
 ![image](https://github.com/user-attachments/assets/1607c1fe-4871-4f64-bce8-c6a2bffb0655)
 
-- 
+- Churn by contract type
+```
+SELECT 
+    Contract, 
+    COUNT(CASE WHEN CHURN = 1 THEN 1 END) AS churn_count,
+    (COUNT(CASE WHEN CHURN = 1 THEN 1 END) * 100.0) / SUM(COUNT(CASE WHEN CHURN = 1 THEN 1 END)) OVER() AS churn_rate
+FROM cleaned_Telcos_Churn
+GROUP BY Contract;
+```
+![image](https://github.com/user-attachments/assets/d0ef36f9-10a7-4f9c-9686-f6553fb69d76)
 
-
-
-
+From the results above, a larger percentage of those who churned are *monthly* subscribers, while *2-year* subscribers churned the least. This could be explained by the fact that it is easier for monthly subscribers to opt out quicker when their payments expire. 
 
