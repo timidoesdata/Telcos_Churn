@@ -1,15 +1,14 @@
-# Customer Churn Analysis: Subscription-Based Business Models
+# Customer Churn Pattern Analysis: Subscription-Based Business Models
 
 ## Introduction
 
-Customer retention is a key metric for any subscription-based business, and understanding why customers leave is crucial to long-term profitability. 
-In this project, I analyzed customer churn in the telecom industry using [data from Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn).
+Churn is almost inevitable, but understanding its patterns is where the real opportunity lies. For this project, I set out to explore the patterns and characteristics of customers who churn in a telecommunications company with a subscription-based model, with the goal of uncovering trends that could inform future strategies. The patterns uncovered here pave the way for future analyses aimed at tackling churn head-on.
 
-The objective is to **identify key factors influencing churn, and extract actionable insights** to help this business reduce customer attrition. The analysis follows a structured approach using **Python for data preprocessing** & **EDA** **SQL for querying,** and **Power BI for visualization.**
+The analysis follows a structured approach using **Python for data preprocessing**, **SQL for EDA & querying,** and **Power BI for visualization.**
 
 ## Dataset Used: 
 
-The [Telco Customer Churn dataset](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) contains 7,043 rows & 21 columns of customer information from a Telecom Company. The dataset is publicly available on [Kaggle.](https://www.kaggle.com/datasets/) <br>
+The [Telco Customer Churn dataset](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) contains 7,043 rows & 21 columns of customer information from a Telecom Company. 
 
 **Key features include:**
 - Customer Demographics
@@ -180,21 +179,29 @@ The first year saw the highest rate of customer acquisition, dropping year-on-ye
 - Customer Value vs. Perfect Value
 ```
 SELECT 'revenue_at_total_retention' AS metric, SUM(MonthlyCharges) * 72 AS value
+FROM cleaned_Telcos_Churn 
+UNION ALL
+SELECT 'revenue_at_half_retention' AS metric, SUM(MonthlyCharges) * 36 AS value 
 FROM cleaned_Telcos_Churn
 UNION ALL
-SELECT 'revenue_at_half_retention' AS metric, SUM(MonthlyCharges) * 36 AS value
+SELECT 'actual_revenue' AS metric, SUM(TotalCharges) AS value 
 FROM cleaned_Telcos_Churn
-UNION ALL
-SELECT 'actual_revenue' AS metric, SUM(TotalCharges) AS value
-FROM cleaned_Telcos_Churn;
 ```
 ![image](https://github.com/user-attachments/assets/5b89b0d2-2938-41a5-ac43-942db9fd0b6d)
 
 The above shows a long-term retention issue, as revenue realized is below 50% of projected revenue if all acquired customers were retained. It is also below the projected revenue if half the customers acquired over the 6-year period were retained. 
 
 ## DASHBOARD
+**[View Dashboard](https://4h8nvq-my.sharepoint.com/:u:/g/personal/timi_4h8nvq_onmicrosoft_com/EbDvdDfp0bZPvFe3Ar4ykukBDmNg2Ivc5Z__Vyg0rNreww?e=bzdSuZ)**
 
 ![image](https://github.com/user-attachments/assets/846611a6-bb34-4507-893b-1e845ea6c4f6)
 
+## INSIGHTS
+
+- Within the first year of launch, more than half of the subscribers dropped off, however, churn rates dropped significantly between the second and sixth year, which might be an indication of updates or improvement based on initial feedback.
+
+- Customers on month-to-month contracts were far more likely to leave, making up nearly 89% of all churned customers. On the other hand, customers who committed to one-year or two-year contracts were significantly more loyal. There is the potential of revisiting contract strategies to encourage longer stays.
+
+- If all customers had been retained, revenue could have reached 32.8 million. In reality, it only hit about 16.1 million, which is less than half of the potential. This signals that even though churn is about 26%, much more revenue is being lost or valuable customers are churning. 
 
 
