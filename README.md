@@ -79,7 +79,7 @@ FROM cleaned_Telcos_Churn
 WHERE Churn = 1 OR Churn = 0
 GROUP BY Churn
 ```
-
+I createed a calculated column in Power BI using the "IF" function in DAX to assign the value "Churned" to 1, and "Stayed" to 0. 
 ![image](https://github.com/user-attachments/assets/42233e4c-8ff8-4db7-b04f-fa84fc3f25fc)
 
 From the results of the above, **5,174** customers were retained, while the remaining **1,869** churned/left. Let us find the percentage churn, which we can do by either calculating *(number of churned customers / total number of customers) * 100* or simply writing the query below:
@@ -101,5 +101,100 @@ GROUP BY Contract;
 ```
 ![image](https://github.com/user-attachments/assets/d0ef36f9-10a7-4f9c-9686-f6553fb69d76)
 
-From the results above, a larger percentage of those who churned are *monthly* subscribers, while *2-year* subscribers churned the least. This could be explained by the fact that it is easier for monthly subscribers to opt out quicker when their payments expire. 
+From the results above, a larger percentage of those who churned are *monthly* subscribers, while *2-year* subscribers churned the least. This could be explained by the fact that it is easier for monthly subscribers to opt out quicker when their payments expire. It also shows that monthly subscribers either testing the product or at their first time trial did not find enough value to return for. Behavioral analysis of user drop-off points will give more insights on user behavior. 
+
+- Churn by payment method
+```
+SELECT 
+	PaymentMethod, 
+	COUNT(CASE WHEN Churn = 1 THEN 1 END) AS churn_count,
+	(COUNT(CASE WHEN CHURN = 1 THEN 1 END) * 100.0) / SUM(COUNT(CASE WHEN CHURN = 1 THEN 1 END)) OVER() AS churn_rate
+FROM cleaned_Telcos_Churn
+GROUP BY PaymentMethod
+ORDER BY churn_count DESC;
+```
+![image](https://github.com/user-attachments/assets/3147948b-6c6f-4bc8-b024-80fec3fe48cb)
+
+From the results above, automatic payment methods (credit card & bank transfer) have the least churn rate, which could be explained by the speed and ease of their subscription through this method. Customers paying with electronic checks churn the highest, likely due to less financial stability and a slower payment process. 
+
+- Churn by tenure category
+Here, I categorized customers according to how many months they were suscribed before dropping the Telcos service.
+I first determined the highest number of months spent (72) using:
+```
+SELECT DISTINCT tenure
+FROM cleaned_Telcos_Churn
+ORDER BY tenure DESC
+```
+
+Next, I classified the months into four sections *less than a year*, *1-2 years*, *2-4 years*, *4+ years*
+```
+SELECT 
+	CASE 
+	WHEN tenure <= 12 THEN '0-1 year'
+	WHEN tenure <= 24 THEN '1-2 years'
+	WHEN tenure <= 48 THEN '2-4 years'
+	ELSE '4+ years'
+	END AS tenure_category,
+COUNT(CASE WHEN Churn = 1 THEN 1 END) AS churn_count,
+(COUNT(CASE WHEN CHURN = 1 THEN 1 END) * 100.0) / SUM(COUNT(CASE WHEN CHURN = 1 THEN 1 END)) OVER() AS churn_rate
+FROM cleaned_Telcos_Churn
+GROUP BY 
+	CASE 
+	WHEN tenure <= 12 THEN '0-1 year'
+	WHEN tenure <= 24 THEN '1-2 years'
+	WHEN tenure <= 48 THEN '2-4 years'
+	ELSE '4+ years'
+	END
+ORDER BY tenure_category ASC
+```
+![image](https://github.com/user-attachments/assets/76318cca-d875-42d6-b0d1-7bbd02ebee35)
+
+- Customer acquistion vs. Churn over time
+```
+SELECT 
+    CASE 
+	WHEN tenure <= 12 THEN '1st year'
+	WHEN tenure <= 24 THEN '2nd year'
+	WHEN tenure <= 36 THEN '3rd year'
+	WHEN tenure <= 48 THEN '4th year'
+	WHEN tenure <= 60 THEN '5th year'
+	ELSE '6th year'
+	END AS tenure_category,
+    COUNT(CustomerID) AS Customers_At_Start,
+    COUNT(CASE WHEN Churn = 1 THEN 1 END) AS Churned_Customers
+FROM cleaned_Telcos_Churn
+GROUP BY CASE  
+	WHEN tenure <= 12 THEN '1st year'
+	WHEN tenure <= 24 THEN '2nd year'
+	WHEN tenure <= 36 THEN '3rd year'
+	WHEN tenure <= 48 THEN '4th year'
+	WHEN tenure <= 60 THEN '5th year'
+	ELSE '6th year'
+	END
+ORDER BY tenure_category
+```
+![image](https://github.com/user-attachments/assets/353250cb-af93-4a51-9c48-639a7dc1bb8f)
+
+The first year saw the highest rate of customer acquisition, dropping year-on-year at an median of 18% until year 5, picking up at a rate of 46% by the 6th year. Churn also decreased, with year 6 seeing the least rate of customer drop-offs. 
+
+- Customer Value vs. Perfect Value
+```
+SELECT 'revenue_at_total_retention' AS metric, SUM(MonthlyCharges) * 72 AS value
+FROM cleaned_Telcos_Churn
+UNION ALL
+SELECT 'revenue_at_half_retention' AS metric, SUM(MonthlyCharges) * 36 AS value
+FROM cleaned_Telcos_Churn
+UNION ALL
+SELECT 'actual_revenue' AS metric, SUM(TotalCharges) AS value
+FROM cleaned_Telcos_Churn;
+```
+![image](https://github.com/user-attachments/assets/5b89b0d2-2938-41a5-ac43-942db9fd0b6d)
+
+The above shows a long-term retention issue, as revenue realized is below 50% of projected revenue if all acquired customers were retained. It is also below the projected revenue if half the customers acquired over the 6-year period were retained. 
+
+## DASHBOARD
+
+![image](https://github.com/user-attachments/assets/846611a6-bb34-4507-893b-1e845ea6c4f6)
+
+
 
