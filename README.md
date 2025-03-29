@@ -198,10 +198,24 @@ The above shows a long-term retention issue, as revenue realized is below 50% of
 
 ## INSIGHTS
 
-- Within the first year of launch, more than half of the subscribers dropped off, however, churn rates dropped significantly between the second and sixth year, which might be an indication of updates or improvement based on initial feedback.
+- Within the first year of launch, more than half of the subscribers dropped off, however, churn rates dropped significantly between the second and sixth year, which might be an indication of updates or improvement based on initial feedback. 
+Strengthening onboarding, offering incentives for early engagement, or creating better first-year experiences could be key to improving retention.
 
 - Customers on month-to-month contracts were far more likely to leave, making up nearly 89% of all churned customers. On the other hand, customers who committed to one-year or two-year contracts were significantly more loyal. There is the potential of revisiting contract strategies to encourage longer stays.
+Encouraging longer contracts or offering discounts for annual plans could be an effective way to reduce churn.
 
-- If all customers had been retained, revenue could have reached 32.8 million. In reality, it only hit about 16.1 million, which is less than half of the potential. This signals that even though churn is about 26%, much more revenue is being lost or valuable customers are churning. 
+- If all customers had been retained, revenue could have reached 32.8 million. In reality, it only hit about 16.1 million, which is less than half of the potential. This signals that even though churn is about 26%, much more revenue is being lost or valuable customers are churning.
+Understanding which customers contribute the most value and targeting them with retention strategies could significantly improve revenue, and reduce churn on high revenue generating customers.
+
+- Although in general more customers appeared to use the *Electronic Check* payment method, this category churned more. This could be an indication that adopting / prioritizing easier payment methods increases chances of retention.
+Encouraging more customers to switch to automated payments could be a subtle but effective way to handle churn.
+
+## CONCLUSION
+
+This analysis has uncovered patterns with the users and their relationship with this Telcos company, however more data would be required for a more indepth analysis towards a solution to significantly reduce churn. 
+
+While available data is limited,collecting data from the customer service department will help inform what customers have complained about the most, or their feedback in general. This could help to inform subsequent updates and find out pain points that have yet to be addressed, leading to user drop-offs or a search for a better product. 
+
+Data and collaboration from the product team would give more insight into user behaviour and how they interact with the service, helping to note at what point they struggled with the interface, any features or updates. 
 
 
