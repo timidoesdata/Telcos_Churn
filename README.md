@@ -57,7 +57,7 @@ df[yesno_cols] = df[yesno_cols].apply(lambda x: x.map({"Yes": 1, "No": 0}))
 df[yesno_cols].head()
 ```
 
-- Saved the now clean dataset
+- Saved the now [clean dataset](https://drive.google.com/file/d/1PlCSNZITEq3mkZwpmNAiEnqeNunJ_a0m/view?usp=sharing)
 ```
 df.to_csv("cleaned_Telcos_Churn.csv", index= False)
 ```
